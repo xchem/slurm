@@ -1,6 +1,6 @@
 # slurm
 
-> Scripts for running slurm scripts on the STFC/IRIS HPC
+> Scripts for running SLURM scripts on the STFC/IRIS HPC
 
 ## Connecting and running jobs
 
