@@ -2,7 +2,7 @@
 
 > Scripts for running SLURM scripts on the STFC/IRIS HPC
 
-## Connecting and running jobs
+## Connecting to the cluster
 
 Assuming you have a three-letter FedID you can use the terminal (Unix, so WLS needs activating in Windows) to ssh in:
 
@@ -11,12 +11,50 @@ Assuming you have a three-letter FedID you can use the terminal (Unix, so WLS ne
  
 From there you can submit jobs via Slurm job manager
 
+## Inspecting/monitoring the cluster
+
+- `sinfo` overview of partitions available and the state of their nodes
+- `squeue` view the queue of RUNNING and PENDING jobs for all users
+- `squeue -u USER -t STATE` view the queue for a USER with the given STATE
+- `sacct -u USER` view the history for a given USER
+
+## Submitting jobs
+
+Jobs are submitted with the `sbatch` command
+
+### Interactive jobs
+
+Request an interactive bash session: `srun bash`
+
+It will usually start immediately but it won't have a prompt so might look weird
+
+### Running scripts
+
+Job scripts need to start with the bash shebang: `#!/bin/bash`, and then include SLURM commands/directives prepended with `#SBATCH`.
+
 ## Recommended job constraints
 
-Constraints for SLURM jobs can be specified in the header of the submission script, or from the command line.
+Constraints for SLURM jobs can be specified in the header of the submission script with the prefix `#SBATCH`, or from the command line.
 
-- Partition: `partition=main` is CPU, while `partition=gpu` is GPU.
-- gres: to get a A100 (ie. juicy 80GB of VRAM) node set `--gres=gpu:a100:4`
+- job-name: name of the job
+- chdir: root directory for the job (default is where `sbatch` was run from)
+- output: path to file where STDOUT will be directed
+- error: path to file where STDERR will be directed
+- ntasks: number of tasks/threads for the job
+- cpus-per-task: CPUs to assign to each task
+- time: wall-time limit for the job
+- nodes: number of nodes to request for the job
+- exclusive: allow others to request/schedule unallocated resources on your node(s)
+- mem: total memory to request
+- mem-per-cpu: memory to request per CPU
+- constraint: specify extra constraints on hardware
+- mail-type: specify when to send an email
+- mail-user: specify where to send the email to
+- partition: `partition=main` is CPU, while `partition=gpu` is GPU.
+- gres: to get a A100 (ie. 80GB of VRAM) node set `--gres=gpu:a100:4`
+
+[SLURM cheatsheet](https://slurm.schedmd.com/pdfs/summary.pdf)
+[SLURM homepage](https://slurm.schedmd.com/documentation.html)
 
 ## File systems
  
