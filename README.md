@@ -18,6 +18,36 @@ From there you can submit jobs via Slurm job manager
 - `squeue -u USER -t STATE` view the queue for a USER with the given STATE
 - `sacct -u USER` view the history for a given USER
 
+### Using sq.sh
+
+sq.sh from [MShTools](https://github.com/mwinokan/MShTools) combines many of the above commands into a more human readable format. To use it add the following to your login profile (e.g. `~/.bashrc_user`:
+
+```
+export MSHTOOLS=/opt/xchem-fragalysis-2/maxwin/MShTools
+export PATH=$PATH:$MSHTOOLS
+alias sq='sq.sh -u YOUR_FED_ID'
+```
+
+Then you can use the `sq` alias to monitor your running, pending, and previous jobs:
+
+![Screenshot 2024-05-22 at 14 39 14](https://github.com/xchem/slurm/assets/36866506/0716f3fc-6867-4281-9526-c445dd05d893)
+
+Other features at a glance
+
+- `sq -i` list all the idle nodes
+- `sq -q` list all the pending jobs (for all users)
+- `sq -a` list all the jobs that are ending soon (if you are waiting for resources)
+- `sq --hist '1 hour'` list all your jobs from the past hour (the time period can be changed at will, e.g. "3 months")
+- `sq -j JOB_ID` see information about a specific job (most useful with active jobs)
+- `sq -h` show a help screen
+
+### Other MShTools scripts
+
+You may also find the following scripts useful
+
+- `sb.sh` A pretty wrapper for sbatch (suggested alias: `alias sb=sb.sh`)
+- `jd.sh` Change to the job directory a job is running in (suggested alias: `alias sb='source jd.sh'`)
+
 ## Submitting jobs
 
 Jobs are submitted with the `sbatch` command
