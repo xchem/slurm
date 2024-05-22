@@ -46,7 +46,7 @@ Other features at a glance
 You may also find the following scripts useful
 
 - `sb.sh` A pretty wrapper for sbatch (suggested alias: `alias sb=sb.sh`)
-- `jd.sh` Change to the job directory a job is running in (suggested alias: `alias sb='source jd.sh'`)
+- `jd.sh` Change to the job directory a job is running in (suggested alias: `alias jd='source jd.sh'`)
 
 ## Submitting jobs
 
