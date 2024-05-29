@@ -2,6 +2,18 @@
 
 > Scripts for running SLURM scripts on the STFC/IRIS HPC
 
+### Contents
+
+- [Connecting to the cluster](#connecting-to-the-cluster)
+- [Inspecting/monitoring the cluster](#inspectingmonitoring-the-cluster)
+- [Submitting jobs](#submitting-jobs)
+- [Recommended job constraints](#recommended-job-constraints)
+- [Setting up conda](#setting-up-conda)
+- [Running a Jupterlab server in a SLURM job](#running-a-jupterlab-server-in-a-slurm-job)
+- [Shared software](#shared-software)
+- [Singularity / CUDA driver headaches](#singularity--cuda-driver-headaches)
+- [Links](#links)
+
 ## Connecting to the cluster
 
 Assuming you have a three-letter FedID you can use the terminal (Unix, so WLS needs activating in Windows) to ssh in:
