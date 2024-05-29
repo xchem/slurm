@@ -91,9 +91,34 @@ Constraints for SLURM jobs can be specified in the header of the submission scri
 The “shared” drive (mounted CephFS) is mounted as `/opt/xchem-fragalysis-2`.
 Someone such as godson.alex@diamond.ac.uk or christopher.reynolds@diamond.ac.uk will likely need to add your username to the extended permissions.
 
+## Setting up conda
+
+The install_conda.sh script in this repository can be submitted as a job to create a new conda environment with the following procedure:
+
+### Create a working directory in /opt/xchem-fragalysis-2
+
+If you don't have one already you should create a working directory for yourself within `/opt/xchem-fragalysis-2`:
+
+```
+mkdir /opt/xchem-fragalysis-2/YOUR_DIRECTORY_NAME
+```
+
+### Submit the install script
+
+```
+cd /opt/xchem-fragalysis-2/YOUR_DIRECTORY_NAME
+sbatch /opt/xchem-fragalysis-2/maxwin/slurm/install_conda.sh YOUR_DIRECTORY_NAME YOUR_CONDA_DIRECTORY
+```
+
+N.B. `YOUR_CONDA_DIRECTORY` should be the directory name for your conda installation within YOUR_DIRECTORY_NAME.
+
+**Warning: this script will overwrite an existing installation in YOUR_DIRECTORY_NAME/YOUR_CONDA_DIRECTORY so give it a new name to any existing installations!**
+
+Monitor the status of the job with `squeue` or `sq.sh`, it will take about 20 minutes.
+
 ## Shared software
  
-In ` opt/xchem-fragalysis-2/shared` folder are some stuff of use.
+In `/opt/xchem-fragalysis-2/shared` folder are some stuff of use.
 Stuff that expires yearly:
 CSD licence is from richard.cooper@chem.ox.ac.uk (university licence), while Open-Eye is from John Chodera’s folk (ASAP) use only.
 
