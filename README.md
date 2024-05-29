@@ -116,6 +116,57 @@ N.B. `YOUR_CONDA_DIRECTORY` should be the directory name for your conda installa
 
 Monitor the status of the job with `squeue` or `sq.sh`, it will take about 20 minutes.
 
+## Running a Jupterlab server in a SLURM job
+
+Once you have a conda environment set up you can configure and then run a jupyterlab notebook server in a SLURM job that you can access via the browser on your local workstation.
+
+The script for this is `notebook.sh` in this repository and is provided at `/opt/xchem-fragalysis-2/maxwin/slurm/notebook.sh` for convenience.  
+
+### Configure jupyter
+
+To configure the notebook server run the following:
+
+```
+sbatch /opt/xchem-fragalysis-2/maxwin/slurm/notebook.sh -p PORT -d YOUR_DIRECTORY_NAME -cd YOUR_CONDA_DIRECTORY -jc JUPYTER_CONFIG_DIR -js PASSWORD
+```
+
+- `PORT` is the port the notebook will be accessible on, **N.B. scientific computing has only whitelisted ports from 9500 to 9510.**
+- `JUPYTER_CONFIG_DIR` will specify where the jupyter config is stored within `YOUR_DIRECTORY_NAME`, e.g. `jupyter_slurm`.
+- `PASSWORD` will be the password for your jupyter notebook
+- Run `bash /opt/xchem-fragalysis-2/maxwin/slurm/notebook.sh --help` For extra details on the CLI
+
+This job will only take around ~10 seconds to complete.
+
+### Run the jupyter notebook job
+
+Similarly to launch the actual notebook server run the following:
+
+```
+sbatch /opt/xchem-fragalysis-2/maxwin/slurm/notebook.sh -p PORT -d YOUR_DIRECTORY_NAME -cd YOUR_CONDA_DIRECTORY -jc JUPYTER_CONFIG_DIR
+```
+
+N.B. the omission of the `-js` argument.
+
+This will start a non-exclusive job with only one task/CPU on the main paritition. This can be customised, e.g.:
+
+```
+sbatch --exclusive --ntasks=30 --partition=gpu /opt/xchem-fragalysis-2/maxwin/slurm/notebook.sh -p PORT -d YOUR_DIRECTORY_NAME -cd YOUR_CONDA_DIRECTORY -jc JUPYTER_CONFIG_DIR
+```
+
+to request an exclusive job on one of the gpu nodes.
+
+### Accessing the notebook job
+
+Inspect the log file for the running job, and make note of the ip-address at the start of the log. Then from a new terminal on your local workstation:
+
+```
+ssh -L 8080:IP_ADDRESS:PORT cepheus-slurm.diamond.ac.uk
+```
+
+The above assumes that you have already set up your identityfile and proxyjump in your `.ssh/config`.
+
+Once connected navigate to `localhost:8080` in your browser to access the notebook.
+
 ## Shared software
  
 In `/opt/xchem-fragalysis-2/shared` folder are some stuff of use.
